@@ -37,7 +37,7 @@ void Object::render(SDL_Renderer* rend, const Camera& camera, float rotx[3][3], 
 
     for (auto& tri : m_mesh.tris)
     {
-        if (real_points[tri.indexes[0]].z >= 1.f && real_points[tri.indexes[1]].z >= 1.f && real_points[tri.indexes[2]].z >= 1.f)
+        if (real_points[tri.indexes[0]].z >= 0.f && real_points[tri.indexes[1]].z >= 0.f && real_points[tri.indexes[2]].z >= 0.f)
         {
             graphics::draw_wireframe_triangle(rend, projected_points[tri.indexes[0]], projected_points[tri.indexes[1]], projected_points[tri.indexes[2]]);
         }
