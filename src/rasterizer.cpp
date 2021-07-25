@@ -29,9 +29,21 @@ void Rasterizer::mainloop()
 
         SDL_RenderClear(m_rend);
 
+        float rotx[3][3] = {
+            { 1, 0, 0 },
+            { 0, cosf(m_camera.va()), sinf(m_camera.va()) },
+            { 0, -sinf(m_camera.va()), cosf(m_camera.va()) }
+        };
+
+        float roty[3][3] = {
+            { cosf(m_camera.ha()), 0, sinf(m_camera.ha()) },
+            { 0, 1, 0 },
+            { -sinf(m_camera.ha()), 0, cosf(m_camera.ha()) }
+        };
+
         for (auto& obj : m_objects)
         {
-            obj.render(m_rend, m_camera);
+            obj.render(m_rend, m_camera, rotx, roty);
         }
 
         SDL_SetRenderDrawColor(m_rend, 0, 0, 0, 255);
@@ -71,6 +83,13 @@ void Rasterizer::handle_events(SDL_Event& evt)
             case SDLK_LSHIFT:
             case SDLK_RSHIFT:
                 m_camera.move(0.f, 1.f, 0.f);
+                break;
+            
+            case SDLK_a:
+                m_camera.rotate(-0.1f, 0.f);
+                break;
+            case SDLK_d:
+                m_camera.rotate(0.1f, 0.f);
                 break;
             }
         } break;

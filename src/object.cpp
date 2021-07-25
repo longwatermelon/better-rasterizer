@@ -7,7 +7,7 @@ Object::Object(Point pos, const std::string& mesh_path)
     : m_pos(pos), m_mesh(file::read_facet(mesh_path)) {}
 
 
-void Object::render(SDL_Renderer* rend, const Camera& camera)
+void Object::render(SDL_Renderer* rend, const Camera& camera, float rotx[3][3], float roty[3][3])
 {
     std::vector<SDL_FPoint> projected_points(m_mesh.points.size());
     std::vector<Point> real_points(m_mesh.points.size());
@@ -20,6 +20,9 @@ void Object::render(SDL_Renderer* rend, const Camera& camera)
         real.x += m_pos.x - camera.x();
         real.y += m_pos.y - camera.y();
         real.z += m_pos.z - camera.z();
+
+        real = matrix_multiply(rotx, real);
+        real = matrix_multiply(roty, real);
 
         real_points[i] = real;
 
@@ -52,5 +55,17 @@ SDL_FPoint Object::center_and_scale(SDL_FPoint p)
     p.y *= 0.5f * 800.f;
 
     return p;
+}
+
+
+Point Object::matrix_multiply(float mat[3][3], Point p)
+{
+    Point ret;
+
+    ret.x = p.x * mat[0][0] + p.y * mat[1][0] + p.z * mat[2][0];
+    ret.y = p.x * mat[0][1] + p.y * mat[1][1] + p.z * mat[2][1];
+    ret.z = p.x * mat[0][2] + p.y * mat[1][2] + p.z * mat[2][2];
+
+    return ret;
 }
 

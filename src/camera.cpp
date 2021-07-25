@@ -12,3 +12,10 @@ void Camera::move(float x, float y, float z)
     m_pos.z += z;
 }
 
+
+void Camera::rotate(float x, float y)
+{
+    m_ha += x;
+    m_va += y;
+}
+
