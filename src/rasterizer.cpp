@@ -25,15 +25,7 @@ void Rasterizer::mainloop()
 
     while (m_running)
     {
-        while (SDL_PollEvent(&evt))
-        {
-            switch (evt.type)
-            {
-            case SDL_QUIT:
-                m_running = false;
-                break;
-            }
-        }
+        handle_events(evt);
 
         SDL_RenderClear(m_rend);
 
@@ -44,6 +36,20 @@ void Rasterizer::mainloop()
 
         SDL_SetRenderDrawColor(m_rend, 0, 0, 0, 255);
         SDL_RenderPresent(m_rend);
+    }
+}
+
+
+void Rasterizer::handle_events(SDL_Event& evt)
+{
+    while (SDL_PollEvent(&evt))
+    {
+        switch (evt.type)
+        {
+        case SDL_QUIT:
+            m_running = false;
+            return;
+        }
     }
 }
 

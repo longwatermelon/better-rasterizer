@@ -10,6 +10,7 @@ public:
     ~Rasterizer();
 
     void mainloop();
+    void handle_events(SDL_Event& evt);
 
 private:
     bool m_running{ true };
