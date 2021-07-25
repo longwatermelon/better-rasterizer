@@ -21,8 +21,8 @@ void Object::render(SDL_Renderer* rend, const Camera& camera, float rotx[3][3], 
         real.y += m_pos.y - camera.y();
         real.z += m_pos.z - camera.z();
 
-        real = matrix_multiply(rotx, real);
         real = matrix_multiply(roty, real);
+        real = matrix_multiply(rotx, real);
 
         real_points[i] = real;
 
