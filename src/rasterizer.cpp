@@ -65,16 +65,16 @@ void Rasterizer::handle_events(SDL_Event& evt)
         {
             switch (evt.key.keysym.sym)
             {
-            case SDLK_RIGHT:
+            case SDLK_d:
                 m_camera.move(1.f, 0.f, 0.f);
                 break;
-            case SDLK_LEFT:
+            case SDLK_a:
                 m_camera.move(-1.f, 0.f, 0.f);
                 break;
-            case SDLK_UP:
+            case SDLK_w:
                 m_camera.move(0.f, 0.f, 1.f);
                 break;
-            case SDLK_DOWN:
+            case SDLK_s:
                 m_camera.move(0.f, 0.f, -1.f);
                 break;
             case SDLK_SPACE:
@@ -85,11 +85,17 @@ void Rasterizer::handle_events(SDL_Event& evt)
                 m_camera.move(0.f, 1.f, 0.f);
                 break;
             
-            case SDLK_a:
+            case SDLK_LEFT:
                 m_camera.rotate(-0.1f, 0.f);
                 break;
-            case SDLK_d:
+            case SDLK_RIGHT:
                 m_camera.rotate(0.1f, 0.f);
+                break;
+            case SDLK_UP:
+                m_camera.rotate(0.f, -0.1f);
+                break;
+            case SDLK_DOWN:
+                m_camera.rotate(0.f, 0.1f);
                 break;
             }
         } break;
