@@ -1,5 +1,6 @@
 #pragma once
 #include "object.h"
+#include "camera.h"
 #include <SDL.h>
 
 
@@ -18,6 +19,7 @@ private:
     SDL_Window* m_window{ 0 };
     SDL_Renderer* m_rend{ 0 };
 
+    Camera m_camera;
     std::vector<Object> m_objects;
 };
 

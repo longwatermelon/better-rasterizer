@@ -16,6 +16,8 @@ add_executable(rasterizer
     src/object.cpp
     src/graphics.h
     src/graphics.cpp
+    src/camera.h
+    src/camera.cpp
 )
 
 target_link_libraries(rasterizer PRIVATE
