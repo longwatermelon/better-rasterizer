@@ -8,8 +8,7 @@ int main(int argc, char** argv)
 
     {
         std::vector<Object> objects = {
-            Object({ 0, 0, 50 }, "res/spirala.facet"),
-            Object({ 0, 0, 10 }, "res/donut.facet")
+            Object({ 0, 0, 10 }, "res/cube.facet")
         };
 
         Rasterizer r(objects);
