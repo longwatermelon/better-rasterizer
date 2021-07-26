@@ -40,7 +40,7 @@ void Object::render(uint32_t* texbuf, const Camera& camera, float rotx[3][3], fl
         if (real_points[tri.indexes[0]].z >= 1.f && real_points[tri.indexes[1]].z >= 1.f && real_points[tri.indexes[2]].z >= 1.f)
         {
             /* SDL_SetRenderDrawColor(rend, randint(0, 255), randint(0, 255), randint(0, 255), 255); */
-            graphics::draw_filled_triangle(texbuf, projected_points[tri.indexes[0]], projected_points[tri.indexes[1]], projected_points[tri.indexes[2]]);
+            graphics::draw_filled_triangle(texbuf, projected_points[tri.indexes[0]], projected_points[tri.indexes[1]], projected_points[tri.indexes[2]], tri.color);
             /* SDL_SetRenderDrawColor(rend, 0, 255, 0, 255); */
             /* graphics::draw_wireframe_triangle(rend, projected_points[tri.indexes[0]], projected_points[tri.indexes[1]], projected_points[tri.indexes[2]]); */
         }

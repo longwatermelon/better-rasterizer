@@ -1,4 +1,5 @@
 #include "graphics.h"
+#include "common.h"
 #include <vector>
 #include <iostream>
 #include <SDL.h>
@@ -12,7 +13,7 @@ void graphics::draw_wireframe_triangle(SDL_Renderer* rend, SDL_FPoint p1, SDL_FP
 }
 
 
-void graphics::draw_filled_triangle(uint32_t* texbuf, SDL_FPoint p1, SDL_FPoint p2, SDL_FPoint p3)
+void graphics::draw_filled_triangle(uint32_t* texbuf, SDL_FPoint p1, SDL_FPoint p2, SDL_FPoint p3, SDL_Color col)
 {
     if (p1.y > p2.y)
         std::swap(p1, p2);
@@ -73,7 +74,7 @@ void graphics::draw_filled_triangle(uint32_t* texbuf, SDL_FPoint p1, SDL_FPoint 
             if (y * 800 + i >= 800 * 800)
                 break;
 
-            texbuf[y * 800 + i] = 0x00000000 | 255 << 16 | 255 << 8 | 255;
+            texbuf[y * 800 + i] = 0x00000000 | col.r << 16 | col.g << 8 | col.b;
         }
     }
 }
