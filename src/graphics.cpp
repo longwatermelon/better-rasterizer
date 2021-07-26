@@ -15,6 +15,11 @@ void graphics::draw_wireframe_triangle(SDL_Renderer* rend, SDL_FPoint p1, SDL_FP
 
 void graphics::draw_filled_triangle(uint32_t* texbuf, float* zbuf, Point p1, Point p2, Point p3, SDL_Color col)
 {
+    static std::vector<float> xl(800);
+    static std::vector<float> xr(800);
+    static std::vector<float> zl(800);
+    static std::vector<float> zr(800);
+
     if (p1.y > p2.y)
         std::swap(p1, p2);
 
@@ -45,11 +50,6 @@ void graphics::draw_filled_triangle(uint32_t* texbuf, float* zbuf, Point p1, Poi
             }
         }
     };
-
-    std::vector<float> xl(800);
-    std::vector<float> xr(800);
-    std::vector<float> zl(800);
-    std::vector<float> zr(800);
 
     interpolate(p1, p2, xl, zl);
     interpolate(p2, p3, xl, zl);
