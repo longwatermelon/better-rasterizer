@@ -93,40 +93,6 @@ void Rasterizer::handle_events(SDL_Event& evt)
             {
                 m_keys_down[evt.key.keysym.sym] = true;
             }
-            /* switch (evt.key.keysym.sym) */
-            /* { */
-            /* case SDLK_d: */
-            /*     m_camera.move(rotate_speed, 0.f, 0.f); */
-            /*     break; */
-            /* case SDLK_a: */
-            /*     m_camera.move(-rotate_speed, 0.f, 0.f); */
-            /*     break; */
-            /* case SDLK_w: */
-            /*     m_camera.move(0.f, 0.f, rotate_speed); */
-            /*     break; */
-            /* case SDLK_s: */
-            /*     m_camera.move(0.f, 0.f, -rotate_speed); */
-            /*     break; */
-            /* case SDLK_SPACE: */
-            /*     m_camera.move(0.f, -rotate_speed, 0.f); */
-            /*     break; */
-            /* case SDLK_LSHIFT: */
-            /*     m_camera.move(0.f, 1.f, 0.f); */
-            /*     break; */
-            
-            /* case SDLK_LEFT: */
-            /*     m_camera.rotate(-0.1f, 0.f); */
-            /*     break; */
-            /* case SDLK_RIGHT: */
-            /*     m_camera.rotate(0.1f, 0.f); */
-            /*     break; */
-            /* case SDLK_UP: */
-            /*     m_camera.rotate(0.f, -0.1f); */
-            /*     break; */
-            /* case SDLK_DOWN: */
-            /*     m_camera.rotate(0.f, 0.1f); */
-            /*     break; */
-            /* } */
         } break;
         case SDL_KEYUP:
         {
