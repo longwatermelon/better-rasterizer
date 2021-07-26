@@ -21,51 +21,46 @@ void graphics::draw_filled_triangle(SDL_Renderer* rend, SDL_FPoint p1, SDL_FPoin
 
     if (p2.y > p3.y)
         std::swap(p2, p3);
-
-    auto get_x_values = [](SDL_FPoint p1, SDL_FPoint p2) {
-        if (p1.y == p2.y)
-            return std::vector<float>{ p2.x };
-
-        std::vector<float> values;
-        float slope = (p2.x - p1.x) / (p2.y - p1.y);
-        float x = p1.x;
-
-        for (int i = p1.y; i <= p2.y; ++i)
+    
+    auto interpolate = [](SDL_FPoint p1, SDL_FPoint p2, std::vector<float>& values) {
+        if ((int)p1.y < (int)p2.y)
         {
-            values.emplace_back(x);
-            x += slope;
-        }
+            float slope = (p2.x - p1.x) / (p2.y - p1.y);
+            
+            for (float y = p1.y; y < p2.y; ++y)
+            {
+                if (y < 0)
+                    continue;
 
-        return values;
+                if (y > 800)
+                    break;
+
+                float x = p1.x + (slope * (y - p1.y));
+                x = std::min(std::max(0.f, x), 800.f);
+
+                values[(int)y] = x;
+            }
+        }
     };
 
-    std::vector<float> x12 = get_x_values(p1, p2);
-    std::vector<float> x23 = get_x_values(p2, p3);
-    std::vector<float> x13 = get_x_values(p1, p3);
+    std::vector<float> xl(800);
+    std::vector<float> xr(800);
 
-    if (x12.empty() || x13.empty() || x23.empty())
-        return;
+    interpolate(p1, p2, xl);
+    interpolate(p2, p3, xl);
+    interpolate(p1, p3, xr);
 
-    x12.pop_back();
-    x12.insert(x12.end(), x23.begin(), x23.end());
-
-    int middle = (int)(x12.size() / 2);
-    std::vector<float> *left, *right;
-
-    if (x12[middle] < x13[middle])
+    for (int y = (int)p1.y; y < (int)p3.y; ++y)
     {
-        left = &x12;
-        right = &x13;
-    }
-    else
-    {
-        left = &x13;
-        right = &x12;
-    }
+        if (y < 0)
+            continue;
 
-    for (int y = p1.y; y <= p3.y; ++y)
-    {
-        SDL_RenderDrawLine(rend, (*left)[(int)(y - p1.y)], y, (*right)[(int)(y - p1.y)], y);
+        if (y > 800)
+            break;
+
+        int min = std::min(xl[y], xr[y]);
+        int max = std::max(xl[y], xr[y]);
+        SDL_RenderDrawLine(rend, min, y, max, y);
     }
 
 #if 0
