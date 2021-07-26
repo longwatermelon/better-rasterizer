@@ -7,7 +7,7 @@ Object::Object(Point pos, const std::string& mesh_path)
     : m_pos(pos), m_mesh(file::read_facet(mesh_path)) {}
 
 
-void Object::render(uint32_t* texbuf, const Camera& camera, float rotx[3][3], float roty[3][3])
+void Object::render(uint32_t* texbuf, float* zbuf, const Camera& camera, float rotx[3][3], float roty[3][3])
 {
     std::vector<SDL_FPoint> projected_points(m_mesh.points.size());
     std::vector<Point> real_points(m_mesh.points.size());
@@ -40,7 +40,10 @@ void Object::render(uint32_t* texbuf, const Camera& camera, float rotx[3][3], fl
         if (real_points[tri.indexes[0]].z >= 1.f && real_points[tri.indexes[1]].z >= 1.f && real_points[tri.indexes[2]].z >= 1.f)
         {
             /* SDL_SetRenderDrawColor(rend, randint(0, 255), randint(0, 255), randint(0, 255), 255); */
-            graphics::draw_filled_triangle(texbuf, projected_points[tri.indexes[0]], projected_points[tri.indexes[1]], projected_points[tri.indexes[2]], tri.color);
+            graphics::draw_filled_triangle(texbuf, zbuf,
+                    { projected_points[tri.indexes[0]].x, projected_points[tri.indexes[0]].y, real_points[tri.indexes[0]].z },
+                    { projected_points[tri.indexes[1]].x, projected_points[tri.indexes[1]].y, real_points[tri.indexes[1]].z },
+                    { projected_points[tri.indexes[2]].x, projected_points[tri.indexes[2]].y, real_points[tri.indexes[2]].z }, tri.color);
             /* SDL_SetRenderDrawColor(rend, 0, 255, 0, 255); */
             /* graphics::draw_wireframe_triangle(rend, projected_points[tri.indexes[0]], projected_points[tri.indexes[1]], projected_points[tri.indexes[2]]); */
         }

@@ -33,7 +33,7 @@ void Rasterizer::mainloop()
         handle_events(evt);
 
         SDL_RenderClear(m_rend);
-        graphics::texbuf_reset(m_texbuf);
+        graphics::texbuf_reset(m_texbuf, m_zbuf);
 
         float rotx[3][3] = {
             { 1, 0, 0 },
@@ -49,7 +49,7 @@ void Rasterizer::mainloop()
 
         for (auto& obj : m_objects)
         {
-            obj.render(m_texbuf, m_camera, rotx, roty);
+            obj.render(m_texbuf, m_zbuf, m_camera, rotx, roty);
         }
 
         SDL_SetRenderDrawColor(m_rend, 0, 0, 0, 255);

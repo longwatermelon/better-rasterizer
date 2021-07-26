@@ -24,5 +24,6 @@ private:
 
     SDL_Texture* m_screen_tex;
     uint32_t m_texbuf[800 * 800];
+    float m_zbuf[800 * 800];
 };
 
