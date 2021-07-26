@@ -21,5 +21,8 @@ private:
 
     Camera m_camera;
     std::vector<Object> m_objects;
+
+    SDL_Texture* m_screen_tex;
+    uint32_t m_texbuf[800 * 800];
 };
 

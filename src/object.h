@@ -10,7 +10,7 @@ class Object
 public:
     Object(Point pos, const std::string& mesh_path);
 
-    void render(SDL_Renderer* rend, const Camera& camera, float rotx[3][3], float roty[3][3]);
+    void render(uint32_t* texbuf, const Camera& camera, float rotx[3][3], float roty[3][3]);
 
 private:
     SDL_FPoint center_and_scale(SDL_FPoint p);

@@ -24,3 +24,5 @@ target_link_libraries(rasterizer PRIVATE
     SDL2::SDL2 SDL2::SDL2main
 )
 
+target_compile_options(rasterizer PRIVATE -ggdb)
+

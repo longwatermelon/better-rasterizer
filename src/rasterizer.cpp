@@ -1,4 +1,5 @@
 #include "rasterizer.h"
+#include "graphics.h"
 
 
 Rasterizer::Rasterizer(const std::vector<Object>& objects)
@@ -9,11 +10,15 @@ Rasterizer::Rasterizer(const std::vector<Object>& objects)
 
     SDL_RenderClear(m_rend);
     SDL_RenderPresent(m_rend);
+
+    m_screen_tex = SDL_CreateTexture(m_rend, SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STREAMING, 800, 800);
 }
 
 
 Rasterizer::~Rasterizer()
 {
+    SDL_DestroyTexture(m_screen_tex);
+
     SDL_DestroyRenderer(m_rend);
     SDL_DestroyWindow(m_window);
 }
@@ -28,6 +33,7 @@ void Rasterizer::mainloop()
         handle_events(evt);
 
         SDL_RenderClear(m_rend);
+        graphics::texbuf_reset(m_texbuf);
 
         float rotx[3][3] = {
             { 1, 0, 0 },
@@ -43,10 +49,14 @@ void Rasterizer::mainloop()
 
         for (auto& obj : m_objects)
         {
-            obj.render(m_rend, m_camera, rotx, roty);
+            obj.render(m_texbuf, m_camera, rotx, roty);
         }
 
         SDL_SetRenderDrawColor(m_rend, 0, 0, 0, 255);
+
+        graphics::update_texture(m_screen_tex, m_texbuf);
+        SDL_RenderCopy(m_rend, m_screen_tex, 0, 0);
+
         SDL_RenderPresent(m_rend);
     }
 }

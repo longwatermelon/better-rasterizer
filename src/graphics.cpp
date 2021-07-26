@@ -1,6 +1,7 @@
 #include "graphics.h"
 #include <vector>
 #include <iostream>
+#include <SDL.h>
 
 
 void graphics::draw_wireframe_triangle(SDL_Renderer* rend, SDL_FPoint p1, SDL_FPoint p2, SDL_FPoint p3)
@@ -11,7 +12,7 @@ void graphics::draw_wireframe_triangle(SDL_Renderer* rend, SDL_FPoint p1, SDL_FP
 }
 
 
-void graphics::draw_filled_triangle(SDL_Renderer* rend, SDL_FPoint p1, SDL_FPoint p2, SDL_FPoint p3)
+void graphics::draw_filled_triangle(uint32_t* texbuf, SDL_FPoint p1, SDL_FPoint p2, SDL_FPoint p3)
 {
     if (p1.y > p2.y)
         std::swap(p1, p2);
@@ -60,7 +61,35 @@ void graphics::draw_filled_triangle(SDL_Renderer* rend, SDL_FPoint p1, SDL_FPoin
 
         int min = std::min(xl[y], xr[y]);
         int max = std::max(xl[y], xr[y]);
-        SDL_RenderDrawLine(rend, min, y, max, y);
+
+        for (int i = min; i < max; ++i)
+        {
+            if (i > 800)
+                break;
+
+            if (i < 0)
+                continue;
+
+            if (y * 800 + i >= 800 * 800)
+                break;
+
+            texbuf[y * 800 + i] = 0x00000000 | 255 << 16 | 255 << 8 | 255;
+        }
     }
+}
+
+
+void graphics::texbuf_reset(uint32_t* texbuf)
+{
+    for (int i = 0; i < 800 * 800; ++i)
+    {
+        texbuf[i] = 0x000000;
+    }
+}
+
+
+void graphics::update_texture(SDL_Texture* tex, uint32_t* texbuf)
+{
+    SDL_UpdateTexture(tex, 0, texbuf, 800 * sizeof(uint32_t));
 }
 
