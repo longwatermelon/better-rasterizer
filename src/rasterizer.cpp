@@ -12,6 +12,21 @@ Rasterizer::Rasterizer(const std::vector<Object>& objects)
     SDL_RenderPresent(m_rend);
 
     m_screen_tex = SDL_CreateTexture(m_rend, SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STREAMING, 800, 800);
+
+    m_keys_down = {
+        { SDLK_w, false },
+        { SDLK_a, false },
+        { SDLK_s, false },
+        { SDLK_d, false },
+        
+        { SDLK_RIGHT, false },
+        { SDLK_LEFT, false },
+        { SDLK_UP, false },
+        { SDLK_DOWN, false },
+
+        { SDLK_LSHIFT, false },
+        { SDLK_SPACE, false }
+    };
 }
 
 
@@ -31,6 +46,7 @@ void Rasterizer::mainloop()
     while (m_running)
     {
         handle_events(evt);
+        receive_keys();
 
         SDL_RenderClear(m_rend);
         graphics::texbuf_reset(m_texbuf, m_zbuf);
@@ -73,43 +89,83 @@ void Rasterizer::handle_events(SDL_Event& evt)
             return;
         case SDL_KEYDOWN:
         {
-            switch (evt.key.keysym.sym)
+            if (m_keys_down.find(evt.key.keysym.sym) != m_keys_down.end())
             {
-            case SDLK_d:
-                m_camera.move(1.f, 0.f, 0.f);
-                break;
-            case SDLK_a:
-                m_camera.move(-1.f, 0.f, 0.f);
-                break;
-            case SDLK_w:
-                m_camera.move(0.f, 0.f, 1.f);
-                break;
-            case SDLK_s:
-                m_camera.move(0.f, 0.f, -1.f);
-                break;
-            case SDLK_SPACE:
-                m_camera.move(0.f, -1.f, 0.f);
-                break;
-            case SDLK_LSHIFT:
-            case SDLK_RSHIFT:
-                m_camera.move(0.f, 1.f, 0.f);
-                break;
+                m_keys_down[evt.key.keysym.sym] = true;
+            }
+            /* switch (evt.key.keysym.sym) */
+            /* { */
+            /* case SDLK_d: */
+            /*     m_camera.move(rotate_speed, 0.f, 0.f); */
+            /*     break; */
+            /* case SDLK_a: */
+            /*     m_camera.move(-rotate_speed, 0.f, 0.f); */
+            /*     break; */
+            /* case SDLK_w: */
+            /*     m_camera.move(0.f, 0.f, rotate_speed); */
+            /*     break; */
+            /* case SDLK_s: */
+            /*     m_camera.move(0.f, 0.f, -rotate_speed); */
+            /*     break; */
+            /* case SDLK_SPACE: */
+            /*     m_camera.move(0.f, -rotate_speed, 0.f); */
+            /*     break; */
+            /* case SDLK_LSHIFT: */
+            /*     m_camera.move(0.f, 1.f, 0.f); */
+            /*     break; */
             
-            case SDLK_LEFT:
-                m_camera.rotate(-0.1f, 0.f);
-                break;
-            case SDLK_RIGHT:
-                m_camera.rotate(0.1f, 0.f);
-                break;
-            case SDLK_UP:
-                m_camera.rotate(0.f, -0.1f);
-                break;
-            case SDLK_DOWN:
-                m_camera.rotate(0.f, 0.1f);
-                break;
+            /* case SDLK_LEFT: */
+            /*     m_camera.rotate(-0.1f, 0.f); */
+            /*     break; */
+            /* case SDLK_RIGHT: */
+            /*     m_camera.rotate(0.1f, 0.f); */
+            /*     break; */
+            /* case SDLK_UP: */
+            /*     m_camera.rotate(0.f, -0.1f); */
+            /*     break; */
+            /* case SDLK_DOWN: */
+            /*     m_camera.rotate(0.f, 0.1f); */
+            /*     break; */
+            /* } */
+        } break;
+        case SDL_KEYUP:
+        {
+            if (m_keys_down.find(evt.key.keysym.sym) != m_keys_down.end())
+            {
+                m_keys_down[evt.key.keysym.sym] = false;
             }
         } break;
         }
     }
+}
+
+
+void Rasterizer::receive_keys()
+{
+    float rotate_speed = 0.03f;
+    float move_speed = 0.3f;
+
+    if (m_keys_down[SDLK_SPACE])
+        m_camera.move(0.f, -move_speed, 0.f);
+    if (m_keys_down[SDLK_LSHIFT])
+        m_camera.move(0.f, move_speed, 0.f);
+
+    if (m_keys_down[SDLK_d])
+        m_camera.move(move_speed, 0.f, 0.f);
+    if (m_keys_down[SDLK_a])
+        m_camera.move(-move_speed, 0.f, 0.f);
+    if (m_keys_down[SDLK_w])
+        m_camera.move(0.f, 0.f, move_speed);
+    if (m_keys_down[SDLK_s])
+        m_camera.move(0.f, 0.f, -move_speed);
+
+    if (m_keys_down[SDLK_LEFT])
+        m_camera.rotate(-rotate_speed, 0.f);
+    if (m_keys_down[SDLK_RIGHT])
+        m_camera.rotate(rotate_speed, 0.f);
+    if (m_keys_down[SDLK_UP])
+        m_camera.rotate(0.f, -rotate_speed);
+    if (m_keys_down[SDLK_DOWN])
+        m_camera.rotate(0.f, rotate_speed);
 }
 

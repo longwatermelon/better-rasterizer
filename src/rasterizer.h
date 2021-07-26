@@ -1,6 +1,7 @@
 #pragma once
 #include "object.h"
 #include "camera.h"
+#include <map>
 #include <SDL.h>
 
 
@@ -12,6 +13,7 @@ public:
 
     void mainloop();
     void handle_events(SDL_Event& evt);
+    void receive_keys();
 
 private:
     bool m_running{ true };
@@ -25,5 +27,7 @@ private:
     SDL_Texture* m_screen_tex;
     uint32_t m_texbuf[800 * 800];
     float m_zbuf[800 * 800];
+
+    std::map<SDL_Keycode, bool> m_keys_down;
 };
 
