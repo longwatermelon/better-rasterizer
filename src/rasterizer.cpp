@@ -111,6 +111,9 @@ void Rasterizer::receive_keys()
     float rotate_speed = 0.03f;
     float move_speed = 0.3f;
 
+    if (m_keys_down[SDLK_LCTRL])
+        move_speed = 0.6f;
+
     if (m_keys_down[SDLK_SPACE])
         m_camera.move(0.f, -move_speed, 0.f);
     if (m_keys_down[SDLK_LSHIFT])

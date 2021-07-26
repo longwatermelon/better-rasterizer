@@ -92,11 +92,8 @@ void graphics::draw_filled_triangle(uint32_t* texbuf, float* zbuf, Point p1, Poi
 
 void graphics::texbuf_reset(uint32_t* texbuf, float* zbuf)
 {
-    for (int i = 0; i < 800 * 800; ++i)
-    {
-        texbuf[i] = 0x000000;
-        zbuf[i] = 1e5;
-    }
+    std::fill(texbuf, texbuf + 800 * 800, 0);
+    std::fill(zbuf, zbuf + 800 * 800, 1e5);
 }
 
 
