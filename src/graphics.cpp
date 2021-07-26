@@ -15,6 +15,7 @@ void graphics::draw_wireframe_triangle(SDL_Renderer* rend, SDL_FPoint p1, SDL_FP
 
 void graphics::draw_filled_triangle(uint32_t* texbuf, float* zbuf, Point p1, Point p2, Point p3, SDL_Color col)
 {
+    // Use static vectors to avoid doing large heap allocations every time this function is called
     static std::vector<float> xl(800);
     static std::vector<float> xr(800);
     static std::vector<float> zl(800);
