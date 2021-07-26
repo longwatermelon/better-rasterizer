@@ -47,7 +47,7 @@ void graphics::draw_filled_triangle(SDL_Renderer* rend, SDL_FPoint p1, SDL_FPoin
     std::vector<float> x12 = interpolate(p2.y, p2.x, p3.y, p3.x);
     std::vector<float> x02 = interpolate(p1.y, p1.x, p3.y, p3.x);
 
-    if (x01.empty())
+    if (x01.empty() || x12.empty())
         return;
 
     x01.pop_back();
