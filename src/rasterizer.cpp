@@ -149,15 +149,15 @@ void Rasterizer::receive_keys()
         m_camera.move(0.f, -move_speed, 0.f);
     if (m_keys_down[SDLK_LSHIFT])
         m_camera.move(0.f, move_speed, 0.f);
-
-    if (m_keys_down[SDLK_d])
-        m_camera.move(move_speed, 0.f, 0.f);
-    if (m_keys_down[SDLK_a])
-        m_camera.move(-move_speed, 0.f, 0.f);
+    
     if (m_keys_down[SDLK_w])
-        m_camera.move(0.f, 0.f, move_speed);
+        m_camera.move(-move_speed * sinf(m_camera.ha() + 3.1415f), 0.f, -move_speed * cosf(m_camera.ha() + 3.1415f));
     if (m_keys_down[SDLK_s])
-        m_camera.move(0.f, 0.f, -move_speed);
+        m_camera.move(move_speed * sinf(m_camera.ha() - 3.1415f), 0.f, move_speed * cosf(m_camera.ha() - 3.1415f));
+    if (m_keys_down[SDLK_a])
+        m_camera.move(move_speed * sinf(m_camera.ha() - (3.1415f / 2.f)), 0.f, move_speed * cosf(m_camera.ha() - (3.1415f / 2.f)));
+    if (m_keys_down[SDLK_d])
+        m_camera.move(move_speed * sinf(m_camera.ha() + (3.1415f / 2.f)), 0.f, move_speed * cosf(m_camera.ha() + (3.1415f / 2.f)));
 
     if (m_keys_down[SDLK_LEFT])
         m_camera.rotate(-rotate_speed, 0.f);
