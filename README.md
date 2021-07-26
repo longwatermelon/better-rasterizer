@@ -6,7 +6,7 @@ Rewriting my old incredibly slow and bad rasterization code
 # Building
 You need [vcpkg](https://github.com/microsoft/vcpkg) to build this project.
 ```
-git clone https://github.com/longwatermelon/rasterizer
+git clone https://github.com/longwatermelon/better-rasterizer
 cd rasterizer
 mkdir build
 cd build
