@@ -1,7 +1,7 @@
 # better-rasterizer
 Rewriting my old incredibly slow and bad rasterization code
 
-![Screenshot_20210726_143146](https://user-images.githubusercontent.com/73869536/127062028-b623bba3-cbdc-4be2-aeab-f8796d453065.png)
+![image](https://user-images.githubusercontent.com/73869536/127395423-a8321d16-cd89-475e-8a49-581099c598a2.png)
 
 # Building
 You need [vcpkg](https://github.com/microsoft/vcpkg) to build this project.
