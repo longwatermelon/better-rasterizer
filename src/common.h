@@ -23,7 +23,7 @@ struct Point
 struct Triangle
 {
     std::array<int, 3> indexes;
-    SDL_Color color{ (Uint8)randint(150, 255), (Uint8)randint(150, 255), (Uint8)randint(150, 255) };
+    SDL_Color color{ (Uint8)randint(200, 255), (Uint8)randint(200, 255), (Uint8)randint(200, 255) };
 };
 
 struct Mesh
